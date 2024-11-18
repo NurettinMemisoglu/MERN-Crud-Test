@@ -1,8 +1,18 @@
-import { Container, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Heading,
+  SimpleGrid,
+  Text,
+  VStack,
+  HStack,
+  CardFooter,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product";
 import ProductCard from "../components/ProductCard";
+import CustomerService from "../components/CustomerService";
 
 const HomePage = () => {
   const { fetchProducts, products } = useProductStore();
@@ -12,8 +22,8 @@ const HomePage = () => {
   }, [fetchProducts]);
   console.log(products);
   return (
-    <Container maxW={"conteiner.xl"} p={8}>
-      <VStack>
+    <Container p={8}>
+      <VStack grid={""}>
         <Heading
           as={"h1"}
           fontWeight={"bold"}
@@ -63,6 +73,11 @@ const HomePage = () => {
             </Link>
           </Text>
         )}
+      </VStack>
+      <VStack alignItems={"flex-end"}>
+        <SimpleGrid p={4}>
+          <CustomerService />
+        </SimpleGrid>
       </VStack>
     </Container>
   );

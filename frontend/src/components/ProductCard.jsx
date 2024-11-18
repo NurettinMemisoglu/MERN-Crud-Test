@@ -30,6 +30,7 @@ import { useState } from "react";
 const ProductCard = ({ product }) => {
   const textColor = useColorMode("gray.600", "gray.200");
   const bg = useColorMode("gray.200", "gray.900");
+
   const [updatedProduct, setUpdatedProduct] = useState(product);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
