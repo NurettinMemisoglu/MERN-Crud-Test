@@ -1,71 +1,65 @@
-import {
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Text,
-  Stack,
-  Box,
-  Icon,
-} from "@chakra-ui/react";
 import React from "react";
-import { LuPlusSquare, LuShoppingCart, LuMoon, LuSun } from "react-icons/lu";
+import {
+  LuPlusSquare,
+  LuShoppingCart,
+  LuMoon,
+  LuSun,
+  LuLogOut,
+} from "react-icons/lu";
 import { Link } from "react-router-dom";
-import { useColorMode } from "./ui/color-mode";
 
 const Navbar = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorMode("white", "gray.900");
   return (
-    <Container maxW={"full"} px={10}>
-      <Flex
-        h={20}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        flexDir={{
-          base: "column",
-          sm: "row",
-        }}
-      >
-        <Stack>
-          <Box
-            h={10}
-            fontFamily="myHeading"
-            fontWeight="bold"
-            textTransform="uppercase"
-            textAlign="center"
-            color="transparent" // Metin rengini şeffaf yapıyoruz
-            style={{
-              fontSize: "2rem", // Metin boyutu
-              backgroundImage: "linear-gradient(to right, #ff7e5f, #feb47b)", // Gradyan tanımı
-              backgroundClip: "text", // Arka planı sadece metne uygula
-              WebkitBackgroundClip: "text", // Safari için destek
-            }}
+    <nav className="container mx-auto px-10 py-4">
+      {" "}
+      {/* Use <nav> for semantic HTML */}
+      <div className="flex flex-col sm:flex-row items-center justify-between h-20">
+        <div>
+          <Link
+            to="/"
+            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400 uppercase flex items-center"
           >
-            <Link to={"/"}>
-              <HStack>
-                Product Store
-                <Icon color={"ActiveBorder"}>
-                  <LuShoppingCart fontSize={24} />
-                </Icon>
-              </HStack>
-            </Link>
-          </Box>
-        </Stack>
-
-        <HStack spacing={2} alignItems={"center"}>
-          <Link to={"/create"}>
-            <Button>
-              <LuPlusSquare fontSize={20} />
-            </Button>
+            Product Store
+            <LuShoppingCart color="white" size={24} />
           </Link>
+        </div>
 
-          <Button onClick={toggleColorMode}>
-            {colorMode === "light" ? <LuMoon /> : <LuSun />}
-          </Button>
-        </HStack>
-      </Flex>
-    </Container>
+        <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+          <Link to="/create">
+            <svg
+              className="swap-off h-10 w-15 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 20"
+            >
+              <LuPlusSquare />
+            </svg>
+          </Link>
+          <label className="swap swap-rotate">
+            <input type="checkbox" className="theme-controller" value="light" />
+            <svg
+              className="swap-on h-10 w-10 fill-current select-ghost"
+              viewBox="0 0 24 24"
+            >
+              <LuSun size={20} />
+            </svg>
+            <svg
+              className="swap-off h-10 w-15 fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <LuMoon size={20} />
+            </svg>
+          </label>
+          <svg
+            className="swap-off h-10 w-15 fill-current cursor-pointer"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 20"
+          >
+            <LuLogOut className=" cursor-pointer" />
+          </svg>
+        </div>
+      </div>
+    </nav>
   );
 };
 

@@ -2,10 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import cookieParser from "cookie-parser";
+
 import { connectDB } from "./config/db.js";
+
 import productRoutes from "./routes/product.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 dotenv.config();
 
@@ -20,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "/frontend/dist"))); //Always serve the static files.

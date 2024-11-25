@@ -1,36 +1,8 @@
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  IconButton,
-  Image,
-  Input,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-
-import {
-  DialogActionTrigger,
-  DialogBody,
-  DialogCloseTrigger,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
 import { LuPenSquare, LuTrash2 } from "react-icons/lu";
-import { useColorMode } from "./ui/color-mode";
 import { useProductStore } from "../store/product.js";
-import { Toaster, toaster } from "./ui/toaster";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
-  const textColor = useColorMode("gray.600", "gray.200");
-  const bg = useColorMode("gray.200", "gray.900");
-
   const [updatedProduct, setUpdatedProduct] = useState(product);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -83,51 +55,49 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Box
-      shadow={"lg"}
-      rounded={"lg"}
-      overflow={"hidden"}
-      transition={"all 0.3"}
-      _hover={{ transform: "translateY(-5px)", shadow: "xl" }}
-      bg={bg}
-    >
-      <Image
+    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1px hover:shadow-xl relative">
+      {/* Use relative for dialog positioning */}
+      <img
         src={product.image}
         alt={product.name}
-        h={48}
-        w={"full"}
-        objectFit={"cover"}
+        className="h-48 w-full object-cover"
       />
-
-      <Box p={4}>
-        <Heading as={"h3"} size={"md"} mb={2}>
-          {product.name}
-        </Heading>
-
-        <Text fontWeight={"bold"} fontSize={"xl"} color={textColor} mb={4}>
+      <div className="p-4">
+        <h3 className="text-md font-medium mb-2">{product.name}</h3>
+        <p className="font-bold text-xl text-gray-600 dark:text-gray-200 mb-4">
           ${product.price}
-        </Text>
+        </p>
 
-        <HStack>
-          <IconButton onClick={() => setIsDialogOpen(true)}>
+        <div className="flex">
+          <button
+            onClick={() => setIsDialogOpen(true)}
+            className="btn btn-ghost btn-sm"
+          >
+            {" "}
+            {/* DaisyUI button */}
             <LuPenSquare size={24} />
-          </IconButton>
-          <IconButton onClick={() => handleDeleteProduct(product._id)}>
+          </button>
+          <button
+            onClick={() => handleDeleteProduct(product._id)}
+            className="btn btn-ghost btn-sm"
+          >
             <LuTrash2 size={24} />
-          </IconButton>
-        </HStack>
-      </Box>
-      <DialogRoot open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Dialog Title</DialogTitle>
-            <DialogCloseTrigger />
-          </DialogHeader>
-          <DialogBody>
-            <VStack spacing={4}>
-              <Input
+          </button>
+        </div>
+      </div>
+      {/* Dialog (positioned relative to the card) */}
+      {isDialogOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          {/* Backdrop */}
+          <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-xl w-96">
+            {/* Dialog content */}
+            <h2 className="text-lg font-bold mb-4">Edit Product</h2>
+            <div className="space-y-4">
+              <input
+                type="text"
                 placeholder="Product Name"
                 name="name"
+                className="input input-bordered w-full"
                 value={updatedProduct.name}
                 onChange={(e) =>
                   setUpdatedProduct({
@@ -136,11 +106,11 @@ const ProductCard = ({ product }) => {
                   })
                 }
               />
-
-              <Input
+              <input
                 placeholder="Price"
                 name="price"
                 type="number"
+                className="input input-bordered w-full"
                 value={updatedProduct.price}
                 onChange={(e) =>
                   setUpdatedProduct({
@@ -149,9 +119,10 @@ const ProductCard = ({ product }) => {
                   })
                 }
               />
-              <Input
+              <input
                 placeholder="Image URL"
                 name="image"
+                className="input input-bordered w-full"
                 value={updatedProduct.image}
                 onChange={(e) =>
                   setUpdatedProduct({
@@ -160,25 +131,26 @@ const ProductCard = ({ product }) => {
                   })
                 }
               />
-            </VStack>
-          </DialogBody>
-          <DialogFooter>
-            <DialogActionTrigger>
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              {/* ... (Price and Image inputs - similar structure) */}
+            </div>
+            <div className="flex justify-end mt-4 space-x-2">
+              <button
+                className="btn btn-outline"
+                onClick={() => setIsDialogOpen(false)}
+              >
                 Cancel
-              </Button>
-            </DialogActionTrigger>
-            <Button
-              onClick={() => handleUpdateProduct(product._id, updatedProduct)}
-            >
-              Save
-            </Button>
-          </DialogFooter>
-          <DialogCloseTrigger onClick={() => setIsDialogOpen(false)} />
-        </DialogContent>
-      </DialogRoot>
-      <Toaster />
-    </Box>
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => handleUpdateProduct(product._id, updatedProduct)}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
