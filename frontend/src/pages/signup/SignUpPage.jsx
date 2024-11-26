@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import GenderCheckbox from "./GenderCheckbox";
+import { Link } from "react-router-dom";
+import useSignup from "../../hooks/useSignup.js";
 
 const SignUpPage = () => {
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+
+  const { loading, signup } = useSignup();
+
+  const handleCheckboxChange = (gender) => {
+    setInputs({ ...inputs, gender });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(inputs);
+    // Perform form validation and send data to the server
+  };
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-auto p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
@@ -9,7 +30,7 @@ const SignUpPage = () => {
           Sign Up
         </h1>
 
-        <form className="form mt-2">
+        <form className="form mt-2" onSubmit={handleSubmit}>
           <div className="mt-2">
             <span className="label-text ">FULL NAME</span>
             <label className="input input-bordered flex items-center gap-2">
@@ -21,7 +42,15 @@ const SignUpPage = () => {
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
-              <input type="text" className="grow" placeholder="Full Name" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Full Name"
+                value={inputs.fullName}
+                onChange={(e) =>
+                  setInputs({ ...inputs, fullName: e.target.value })
+                }
+              />
             </label>
           </div>
 
@@ -36,11 +65,19 @@ const SignUpPage = () => {
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
-              <input type="text" className="grow" placeholder="Username" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Username"
+                value={inputs.username}
+                onChange={(e) =>
+                  setInputs({ ...inputs, username: e.target.value })
+                }
+              />
             </label>
           </div>
 
-          <div className="mt-2">
+          {/* <div className="mt-2">
             <span className="label-text">E-MAIL</span>
             <label className="input input-bordered flex items-center gap-2">
               <svg
@@ -52,9 +89,17 @@ const SignUpPage = () => {
                 <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                 <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
               </svg>
-              <input type="text" className="grow" placeholder="Email" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Email"
+                value={inputs.email}
+                onChange={(e) =>
+                  setInputs({ ...inputs, email: e.target.value })
+                }
+              />
             </label>
-          </div>
+          </div>*/}
 
           <div className="mt-2">
             <span className="label-text">PASSWORD</span>
@@ -71,7 +116,15 @@ const SignUpPage = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <input type="password" className="grow" placeholder="Password" />
+              <input
+                type="password"
+                className="grow"
+                placeholder="Password"
+                value={inputs.password}
+                onChange={(e) =>
+                  setInputs({ ...inputs, password: e.target.value })
+                }
+              />
             </label>
           </div>
 
@@ -94,6 +147,10 @@ const SignUpPage = () => {
                 type="password"
                 className="grow"
                 placeholder="Confirm Password"
+                value={inputs.confirmPassword}
+                onChange={(e) =>
+                  setInputs({ ...inputs, confirmPassword: e.target.value })
+                }
               />
             </label>
           </div>
@@ -101,12 +158,18 @@ const SignUpPage = () => {
           <div className="mt-2">
             <span className="checkbox-text">GENDER</span>
 
-            <GenderCheckbox />
+            <GenderCheckbox
+              onCheckboxChange={handleCheckboxChange}
+              selectedGender={inputs.gender}
+            />
           </div>
 
-          <a className="link text-sm hover:underline hover:text-blue-600 mt-2 inline-block">
+          <Link
+            to="/login"
+            className="link text-sm hover:underline hover:text-blue-600 mt-2 inline-block"
+          >
             Already have an account?
-          </a>
+          </Link>
 
           <div className="mt-2">
             <button className="btn btn-block btn-circle mt-2">Sign Up</button>

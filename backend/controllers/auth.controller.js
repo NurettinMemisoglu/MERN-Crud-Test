@@ -1,12 +1,12 @@
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPasword, gender } = req.body;
+    const { fullName, username, password, confirmPassword, gender } = req.body;
 
-    if (password !== confirmPasword) {
+    if (password !== confirmPassword) {
       return res
         .status(400)
         .json({ success: false, message: "Passwords do not match" });
@@ -21,8 +21,8 @@ export const signup = async (req, res) => {
     }
 
     //Hash password here
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
     const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
@@ -50,7 +50,7 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log("Error in signup controller", error.message);
-    res.status(500).json({ success: false, message: "Server Error" });
+    res.status(500).json({ success: false, message: "Server Error 1" });
   }
 };
 
