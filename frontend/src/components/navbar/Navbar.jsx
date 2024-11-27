@@ -7,6 +7,7 @@ import {
   LuLogOut,
 } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 const Navbar = () => {
   return (
@@ -50,13 +51,7 @@ const Navbar = () => {
               <LuMoon size={20} />
             </svg>
           </label>
-          <svg
-            className="swap-off h-10 w-15 fill-current cursor-pointer"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 20"
-          >
-            <LuLogOut className=" cursor-pointer" />
-          </svg>
+          <LogoutButton />
         </div>
       </div>
     </nav>
