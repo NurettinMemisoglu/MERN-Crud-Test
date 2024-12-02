@@ -1,12 +1,10 @@
 {
   "name": "mern-cruid",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/server.js",
   "type": "module",
   "scripts": {
-    "dev": "SET NODE_ENV=development && nodemon backend/server.js npm run dev vite",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "SET NODE_ENV=production && node backend/server.js",
+    
     "server": "nodemon backend/server.js"
   },
   "keywords": [],
@@ -14,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.1",
@@ -24,7 +24,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "stripe": "^17.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
